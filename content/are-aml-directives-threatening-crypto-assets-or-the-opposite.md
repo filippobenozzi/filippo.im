@@ -1,0 +1,29 @@
+---
+title: 'Are AML directives threatening crypto assets or the opposite?'
+publishedAt: '2021-05-25'
+summary: 'The rise of the blockchain technology must provide an impetus to rethink the role and efficacy of the directives, and design them with a decentralized mind.'
+tags: '#economy,#defi'
+source: 'https://www.elliptic.co/blog/aml-bitcoin-threat'
+---
+When you open a bank account today, you will almost certainly be subject to identity and background checks, as well as ongoing monitoring of your activities. This is because with policies adopted by the financial institution, they are able to identify “dirty” money resulting from illicit or criminal activities. This as result, provide more security to the final user against scam or potential frauds.
+
+To counter this the European Institution adopted over the years strong policies known as AML, these generate strong control every time a new bank account is created or when large deposits are made, so banks and other financial institution are unlikely to accept them if there is no legitimate explanation of where deposits come from.
+
+Cryptocurrencies like for example Bitcoin have been consider as money laundering dream, by enabling fast transfer with pseudonymous, bypassing all the “traditional” financial institution that usually trust and apply strong AML controls. When this phenomenon started to grow the focus of the European financial institution became clear: how can we regulate a business handling Bitcoin made with a decentralized technology, with the AML directives made for a centralized system? How can we determine the real source of the funds? 
+
+The real source of the funds could be straightforward with blockchain technology since all the transactions are register in public ledger database, and so a business can demonstrate that the funds may come from an AML compliance source with a verifiable receipt. The solution is to trace the transaction between the addresses, and this could be applied to every kind of crypto assets not only cryptocurrency since the technology behind is the same. In the previous chapter we said that identities are not recorded, actually [studies](https://arxiv.org/abs/1107.4524) has shown that by performing an analysis of the ledger database of the blockchain and mixing that with external data, some identities can be determine. We, therefore, have the potential solution of tracking crypto assets transaction and finding the source, of course mixing services can help to obscure the source but at least we will know if the transaction was legitimate or not. 
+
+Consider then an automated AML service provided by the European Central Bank that verify the source and evaluate a transaction and the fund link to it with a “risk score” based on the history ascertained through block chain analysis. As result the transaction will be classified as “higher risk” if it comes from a mixing services, verified or known criminals or thefts. It would be classified with a “lower risk” if a clear link to trusted institutions or trusted services like Coinbase could be made, more in general if a clear link to the origin of the funds could be establish. [Researcher at University of Munster in Germany](http://fc14.ifca.ai/bitcoin/papers/bitcoin14_submission_15.pdf) tried to describe a system like that.
+But what are the consequence of risk scoring for the crypto assets? This issue of mark blacklist certain assets is really controversial: can for example cryptocurrency work as proper currencies if it is fungible, where some coins are worth more than others because of their provenance? Probably not, especially because an analysis like that on the blockchain will require time and the funds could be already to someone else.
+
+Imagine for example a criminal may be reported as guilty after days. By then the funds may be gone to innocent people, and when the blacklist took effect, the guiltless person will find that the assets that they have, have been devaluated. Who would use such a currency with that risk?
+
+It seems inevitable that when there is a “history” associated to every asset, “dirty” units of assets will exist. One possible solution is doomed every crypto unit. Extension of cryptocurrency such as [Zerocoin protocol](http://zerocoin.org) do exactly that: make impossible to link transaction to its origin by transforming crypto asset more like cash currency. It does that by implementing a mixing services at protocol level. But system like that could become heaven for money launders and be automatically rejected by a regulated AML business.
+
+The AML directives currently active were strongly develop after the 9/11 by implementing directives aim to trace and fight illicit founds used for financing terrorism and after the financial crisis, when virtual currency and crypto assets born. This results in a very huge responsibility for banks and other financial institution that are still struggling to keep the pace with these new technology and directives.
+
+The rise of the blockchain technology must provide an impetus to rethink the role and efficacy of AML directives design with a centralized mind, in order to create system that are able to operate in a decentralized context.
+
+---
+
+*If you want to know more about this, I made a whole research paper that you can [download here](/files/is-the-growth-of-crypto-assets-obscuring-the-aml-directives--research-paper-2021--filippo-benozzi.pdf) about the crypto-assets and the AML directives, for the university class of [Banking and Financial Markets Law](https://www.unive.it/data/insegnamento/259874) at Ca' Foscari University of Venice.*
