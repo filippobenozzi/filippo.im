@@ -227,6 +227,29 @@ export default async function Page() {
             className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
             rel="noopener noreferrer"
             target="_blank"
+            href="https://www.linkedin.com/in/filippobenozzi/"
+          >
+            <ArrowIcon />
+            <p className="h-7 ml-2">linkedin</p>
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+            rel="noopener noreferrer"
+            target="_blank"
+            rel="me"
+            href="https://mastodon.online/@iamfilippo"
+          >
+            <ArrowIcon />
+            <p className="h-7 ml-2">mastodon</p>
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+            rel="noopener noreferrer"
+            target="_blank"
             href="https://www.strava.com/athletes/10859683"
           >
             <ArrowIcon />
