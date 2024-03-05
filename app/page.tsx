@@ -236,9 +236,8 @@ export default async function Page() {
         <li>
           <Link
             className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer me"
             target="_blank"
-            rel="me"
             href="https://mastodon.online/@iamfilippo"
           >
             <ArrowIcon />
