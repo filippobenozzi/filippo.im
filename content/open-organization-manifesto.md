@@ -1,5 +1,5 @@
 ---
-title: 'Business Management embracing Open Principles to research and develop models for creating Open and Sustainable Organizations'
+title: 'Open Principles to research and develop models for creating Open and Sustainable Organizations'
 publishedAt: '2024-11-30'
 summary: 'Research in Business Management aiming to develop models for create open and sustainable organizations.'
 tags: '#openorganization,#leadership'
