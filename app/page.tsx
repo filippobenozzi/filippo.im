@@ -237,10 +237,10 @@ export default async function Page() {
             className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
             rel="noopener noreferrer me"
             target="_blank"
-            href="https://mastodon.social/@iamfil"
+            href="https://bsky.app/profile/filippo.im"
           >
             <ArrowIcon />
-            <p className="h-7 ml-2">mastodon</p>
+            <p className="h-7 ml-2">bluesky</p>
           </Link>
         </li>
         <li>
