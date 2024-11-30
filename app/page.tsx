@@ -103,21 +103,20 @@ export default async function Page() {
         hey, I'm Filippo 👋
       </h1>
       <p className="prose prose-neutral dark:prose-invert">
-        I'm Filippo Benozzi a developer, economic student and musician. Here's my open-source spot where I share my projects, thoughts and researches.
+        I'm Filippo Benozzi, a developer and economic student with a deep passion for technology and innovation. I hold a bachelor's degree in Computer Science and am currently pursuing a Master's in <a target='_blank' href='https://www.unive.it/pag/24754/'>Global Development and Entrepreneurship</a> at the University of Venice.
       </p>
       
       <div className="prose prose-neutral dark:prose-invert">
         <p>
-          I'm currently working in a web-agency near my town as a front-end developer, I'm also moving my first steps as entrepreneur in my parents fashion company, <a target='_blank' href='https://errebi.it'>ErreBi Maglieria</a>.<br/>
-          I have a Computer Science bachelor degree and I'm currently enrolled in a Master Degree in <a target='_blank' href='https://www.unive.it/pag/24754/'>Global Development and Entrepreneurship</a> at University of Venice.<br/>
-          I decided to open this website as my personal space. I will share experiences, thoughts of the things that I'm working or studying on.
+          For eight years, I worked as a web application developer in a web agency, where I honed my skills in creating and optimizing digital solutions.<br />
+          Now, I'm the administrator of <a target='_blank' href='https://errebi.it'>ErreBi Maglieria</a>, a family-owned fashion business and together with my sister, I launched <a target='_blank' href='https://coutique.com'>Coutique</a>, a premium brand that produces high-end clothing made with sustainable and natural fibers.<br />
+          My passion for technology remains strong, driving my mission to digitize our entire company using open-source software. Through this process, I aim to bring the open-source ethos into leadership and management, fostering a culture of transparency and collaboration.
         </p>
       </div>
       <div className="prose prose-neutral dark:prose-invert">
         <p>
-          I try to keep things simple. You'll find writing about technologies
-          I'm interested in at the time, or how I'm learning and growing in my
-          careers, sharing knowledge along the way.
+          In my free time, I enjoy staying active with running, cycling, swimming.<br />
+          This space is where I share my journey—be it about technology, entrepreneurship, or personal growth. I hope it inspires and informs others as they navigate their own paths.
         </p>
       </div>
 
