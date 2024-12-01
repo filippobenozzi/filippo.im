@@ -133,7 +133,7 @@ export default async function Page() {
       </ul>
       
       <div className="my-8 flex flex-col space-y-4 w-full">
-        <h2 className="font-bold text-xl mb-2 mt-4 tracking-tighter">recently</h2>
+        <h2 className="font-bold text-xl mb-2 mt-4 tracking-tighter">my writings</h2>
         <Suspense>
           {allBlogs
             .sort((a, b) => {

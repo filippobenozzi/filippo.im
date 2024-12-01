@@ -40,7 +40,7 @@ export default async function BlogPage() {
 
   return (
     <section>
-      <h1 className="font-bold text-2xl mb-8 tracking-tighter">read my blog</h1>
+      <h1 className="font-bold text-2xl mb-8 tracking-tighter">read my writings</h1>
       <div className="prose prose-neutral mb-8 dark:prose-invert">
         <p>I've been writing online since 2020, mostly about web development and tech careers.<br />In total, I've written {allBlogs.length} articles on this site.</p>
       </div>
