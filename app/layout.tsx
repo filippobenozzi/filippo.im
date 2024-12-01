@@ -25,8 +25,8 @@ const graphik = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://filippo.im'),
   title: {
-    default: 'Filippo Benozzi - Developer, Economic Student',
-    template: '%s | Filippo Benozzi',
+    default: 'Filippo Benozzi / Developer, Economic Student',
+    template: '%s / Filippo Benozzi',
   },
   description: 'Developer, Economic Student',
   openGraph: {

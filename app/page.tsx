@@ -124,17 +124,7 @@ export default async function Page() {
         <li>
           <Link
             className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
-            href="thoughts"
-          >
-            <ArrowIcon />
-            <p className="h-7 ml-2">my thoughts</p>
-          </Link>
-        </li>
-        <li>
-          <Link
-            className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
-            target="_blank"
-            href="https://cv.filippo.im/"
+            href="cv"
           >
             <ArrowIcon />
             <p className="h-7 ml-2">my cv</p>
