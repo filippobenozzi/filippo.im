@@ -130,6 +130,15 @@ export default async function Page() {
             <p className="h-7 ml-2">my cv</p>
           </Link>
         </li>
+        <li>
+          <Link
+            className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+            href="log"
+          >
+            <ArrowIcon />
+            <p className="h-7 ml-2">my log</p>
+          </Link>
+        </li>
       </ul>
       
       <div className="my-8 flex flex-col space-y-4 w-full">

@@ -1,5 +1,5 @@
 const { get } = require('@vercel/edge-config');
-const { withContentlayer } = require('next-contentlayer');
+const { withContentlayer } = require('next-contentlayer2');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -34,6 +34,16 @@ const nextConfig = {
       }
     ];
   },
+
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.md$/,
+      use: 'raw-loader',
+    });
+
+    return config;
+  },
+  
 };
 
 // https://nextjs.org/docs/advanced-features/security-headers

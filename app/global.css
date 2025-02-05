@@ -149,3 +149,7 @@ table {
 .project-list > a:last-child:after{
   content: "";
 }
+.log em{
+  font-size: 70%;
+  width: 100%;
+}

@@ -7,7 +7,7 @@ import Balancer from 'react-wrap-balancer';
 export async function generateMetadata({
   params,
 }): Promise<Metadata | undefined> {
-  const post = allBlogs.find((post) => post.slug === params.slug);
+  let post = allBlogs.find((post) => post.slug === params.slug);
   if (!post) {
     return;
   }
@@ -76,8 +76,8 @@ function formatDate(date: string) {
   return `${fullDate} (${formattedDate})`;
 }
 
-export default async function Blog({ params }) {
-  const post = allBlogs.find((post) => post.slug === params.slug);
+export default function Blog({ params }) {
+  let post = allBlogs.find((post) => post.slug === params.slug);
 
   if (!post) {
     notFound();
