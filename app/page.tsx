@@ -116,7 +116,7 @@ export default async function Page() {
       <div className="prose prose-neutral dark:prose-invert">
         <p>
           In my free time, I enjoy staying active with running, cycling, swimming.<br />
-          This space is where I share my journey—be it about technology, entrepreneurship, or personal growth. I hope it inspires and informs others as they navigate their own paths.
+          This space is where I share my journey be it about technology, entrepreneurship, or personal growth. I hope it inspires and informs others as they navigate their own paths.
         </p>
       </div>
 
