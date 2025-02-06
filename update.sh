@@ -28,6 +28,7 @@ fi
 # Elimina tutte le immagini non utilizzate
 echo "Removing unused Docker images..."
 docker image prune -af
+docker builder prune -f
 
 # Output finale
 echo "Update complete. Your Next.js app has been deployed with the latest changes."
