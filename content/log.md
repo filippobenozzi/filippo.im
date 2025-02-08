@@ -1,2 +1,10 @@
-Bureaucracies make everyone feel productive while doing very little useful work. 
-*2025-02-05 /* *22:39*
+
+Beutiful implementation of local server with GPU: [Unraid fueled MS-01 Homelab Server HackMD](https://hackmd.io/@reneil1337/homelab) 
+*2025-02-06 /* *11:39*
+
+---
+
+Don't cry because something ends, smile because it happened. 
+*2025-02-06 /* *11:37*
+
+---
