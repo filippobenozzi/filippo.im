@@ -8,8 +8,6 @@
   --fx-border: #dad8ce;
   --fx-text: #100f0f;
   --fx-text-muted: #6f6e69;
-  --fx-link: #205ea6;
-  --fx-link-hover: #1a4f8c;
   --fx-selection: rgba(173, 131, 1, 0.24);
 }
 
@@ -20,8 +18,6 @@
     --fx-border: #343331;
     --fx-text: #e6e4d9;
     --fx-text-muted: #9f9d96;
-    --fx-link: #4385be;
-    --fx-link-hover: #66a0c8;
     --fx-selection: rgba(173, 131, 1, 0.3);
   }
 }
@@ -32,6 +28,7 @@
 
 html {
   min-width: 360px;
+  font-size: clamp(16px, 0.95rem + 0.25vw, 18px);
   font-family: -apple-system, BlinkMacSystemFont, Inter, 'IBM Plex Sans', 'Segoe UI', Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   background-color: var(--fx-bg);
@@ -42,24 +39,21 @@ html {
 body {
   background-color: var(--fx-bg);
   color: var(--fx-text);
+  line-height: 1.65;
+  letter-spacing: -0.003em;
 }
 
 a {
   color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.14em;
+  text-decoration-color: currentColor;
+  transition: opacity 120ms ease;
 }
 
-.prose a,
-.project-list a,
-a[target='_blank'],
-a[href^='mailto:'] {
-  color: var(--fx-link);
-}
-
-.prose a:hover,
-.project-list a:hover,
-a[target='_blank']:hover,
-a[href^='mailto:']:hover {
-  color: var(--fx-link-hover);
+a:hover {
+  opacity: 0.85;
 }
 
 h1,
@@ -98,7 +92,7 @@ h6 {
 }
 
 .prose a {
-  @apply transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
+  @apply underline;
 }
 
 .prose .anchor:after {
