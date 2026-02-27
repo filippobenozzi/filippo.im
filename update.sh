@@ -15,10 +15,16 @@ else
   cd "$APP_DIR"
 fi
 
-echo "Installing dependencies with Bun..."
-bun install
+echo "Building and starting Docker containers..."
+docker compose up --build -d
 
-echo "Building Astro site..."
-bun run build
+if ! docker compose ps | grep -q "Up"; then
+  echo "Docker containers failed to start. Check logs with 'docker compose logs'."
+  exit 1
+fi
 
-echo "Update complete. Static files are in dist/."
+echo "Removing unused Docker images..."
+docker image prune -af
+docker builder prune -f
+
+echo "Update complete. Your app has been deployed with the latest changes."

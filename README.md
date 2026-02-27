@@ -39,3 +39,17 @@ bun run start
 ```
 
 For production, prefer serving `dist/` with Nginx or Caddy.
+
+## Update scripts
+
+```bash
+./update-native.sh
+```
+
+Updates from Git and builds natively with Bun.
+
+```bash
+./update.sh
+```
+
+Updates from Git and deploys with Docker Compose.
