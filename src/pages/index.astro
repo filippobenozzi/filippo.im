@@ -15,7 +15,7 @@ const latestBlogs = allBlogs.slice(0, 2);
 
 <BaseLayout canonicalPath="/">
   <section>
-    <h1 class="font-bold text-2xl mb-8 tracking-tighter">hey, I'm Filippo 👋</h1>
+    <h1 class="font-bold text-2xl mb-8">hey, I'm Filippo 👋</h1>
     <p class="prose prose-neutral dark:prose-invert">
       I'm Filippo Benozzi, a developer and economic student with a deep passion for technology and
       innovation. I hold a bachelor's degree in Computer Science and am currently pursuing a Master's
@@ -65,7 +65,7 @@ const latestBlogs = allBlogs.slice(0, 2);
     </ul>
 
     <div class="my-8 flex flex-col space-y-4 w-full">
-      <h2 class="font-bold text-xl mb-2 mt-4 tracking-tighter">my writings</h2>
+      <h2 class="font-bold text-xl mb-2 mt-4">my writings</h2>
       {
         latestBlogs.map((post) => (
           <a class="flex flex-col space-y-1 mb-4" href={`/blog/${getBlogSlug(post)}`}>
@@ -82,7 +82,7 @@ const latestBlogs = allBlogs.slice(0, 2);
       }
     </div>
     <div class="my-8 flex flex-col space-y-4 w-full">
-      <h2 class="font-bold text-xl mb-2 mt-4 tracking-tighter">my work</h2>
+      <h2 class="font-bold text-xl mb-2 mt-4">my work</h2>
 
       <ProjectLink
         link="https://wordpress.org/plugins/popup-notifier-for-contact-form-7"
@@ -106,7 +106,7 @@ const latestBlogs = allBlogs.slice(0, 2);
         name="Edventurous Leadership"
         desc="LMS that challenges different types of leaders to think more broadly about leadership."
       />
-      <h3 class="font-bold text-base mt-4 tracking-tighter">other projects</h3>
+      <h3 class="font-bold text-base mt-4">other projects</h3>
       <div class="flex flex-wrap w-full project-list text-sm">
         <ProjectList name="Oikos" link="https://oikos.it/" />
         <ProjectList name="Atlantis Caps" link="https://atlantisheadwear.com/" />
