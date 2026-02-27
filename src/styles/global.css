@@ -69,6 +69,13 @@ h6 {
   color: var(--fx-text);
 }
 
+h1,
+h2,
+h3,
+h4{
+  font-weight: 500;
+}
+
 .prose .anchor {
   @apply absolute invisible no-underline;
 
