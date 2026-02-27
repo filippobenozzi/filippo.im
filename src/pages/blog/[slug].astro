@@ -1,22 +1,30 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getBlogSlug } from '../../lib/blog';
 import { formatDate } from '../../lib/date';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+  return posts
+    .map((post) => {
+      const slug = getBlogSlug(post);
+
+      return {
+        params: { slug },
+        props: { post, slug },
+      };
+    })
+    .filter((entry) => Boolean(entry.params.slug));
 }
 
 interface Props {
   post: CollectionEntry<'blog'>;
+  slug: string;
 }
 
-const { post } = Astro.props;
+const { post, slug } = Astro.props;
 const { Content } = await post.render();
 
 const ogImage = post.data.image ?? '/og-bg.png';
@@ -29,7 +37,7 @@ const structuredData = {
   dateModified: post.data.publishedAt,
   description: post.data.summary,
   image: `https://filippo.im${ogImage}`,
-  url: `https://filippo.im/blog/${post.slug}`,
+  url: `https://filippo.im/blog/${slug}`,
   author: {
     '@type': 'Person',
     name: 'Filippo Benozzi',
@@ -40,7 +48,7 @@ const structuredData = {
 <BaseLayout
   title={post.data.title}
   description={post.data.summary}
-  canonicalPath={`/blog/${post.slug}`}
+  canonicalPath={`/blog/${slug}`}
   ogType="article"
   ogImage={ogImage}
   publishedTime={post.data.publishedAt}

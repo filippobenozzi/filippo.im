@@ -4,6 +4,7 @@ import ArrowIcon from '../components/ArrowIcon.astro';
 import ProjectLink from '../components/ProjectLink.astro';
 import ProjectList from '../components/ProjectList.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getBlogSlug } from '../lib/blog';
 import { formatDate } from '../lib/date';
 
 const allBlogs = (await getCollection('blog')).sort(
@@ -67,7 +68,7 @@ const latestBlogs = allBlogs.slice(0, 2);
       <h2 class="font-bold text-xl mb-2 mt-4 tracking-tighter">my writings</h2>
       {
         latestBlogs.map((post) => (
-          <a class="flex flex-col space-y-1 mb-4" href={`/blog/${post.slug}`}>
+          <a class="flex flex-col space-y-1 mb-4" href={`/blog/${getBlogSlug(post)}`}>
             <div class="w-full flex flex-col">
               <p class="text-neutral-900 font-semibold dark:text-neutral-100 tracking-tight">
                 {post.data.title}
