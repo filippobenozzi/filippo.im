@@ -1,4 +1,4 @@
-FROM oven/bun:alpine AS base
+FROM oven/bun:alpine AS builder
 
 WORKDIR /app
 COPY package.json ./
@@ -6,7 +6,8 @@ RUN bun install
 COPY . .
 RUN bun run build
 
-ENV NODE_ENV=production
+FROM caddy:2-alpine AS runner
 
-EXPOSE 3000
-CMD ["bun", "run", "start"]
+COPY --from=builder /app/dist /usr/share/caddy
+
+EXPOSE 80

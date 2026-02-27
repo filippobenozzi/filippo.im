@@ -53,3 +53,5 @@ Updates from Git and builds natively with Bun.
 ```
 
 Updates from Git and deploys with Docker Compose.
+
+Docker deployment serves the generated `dist/` files through Caddy on port `80` (mapped to host `3000`).
