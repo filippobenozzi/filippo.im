@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/date';
+
+const allBlogs = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+);
+---
+
+<BaseLayout
+  title="Blog"
+  description="Read my thoughts on software development, design, and more."
+  canonicalPath="/blog"
+>
+  <section>
+    <h1 class="font-bold text-2xl mb-8 tracking-tighter">read my writings</h1>
+    <div class="prose prose-neutral mb-8 dark:prose-invert">
+      <p>
+        I've been writing online since 2020, mostly about web development and tech careers.<br />In
+        total, I've written {allBlogs.length} articles on this site.
+      </p>
+    </div>
+    {
+      allBlogs.map((post) => (
+        <a class="flex flex-col space-y-1 mb-4" href={`/blog/${post.slug}`}>
+          <div class="w-full flex flex-col">
+            <p class="text-neutral-900 font-semibold dark:text-neutral-100 tracking-tight">{post.data.title}</p>
+            <p class="text-neutral-400 text-sm dark:text-neutral-400">
+              {formatDate(post.data.publishedAt)}
+            </p>
+          </div>
+        </a>
+      ))
+    }
+  </section>
+</BaseLayout>

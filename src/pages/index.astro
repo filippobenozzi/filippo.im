@@ -1,0 +1,168 @@
+---
+import { getCollection } from 'astro:content';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import ProjectLink from '../components/ProjectLink.astro';
+import ProjectList from '../components/ProjectList.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate } from '../lib/date';
+
+const allBlogs = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+);
+const latestBlogs = allBlogs.slice(0, 2);
+---
+
+<BaseLayout canonicalPath="/">
+  <section>
+    <h1 class="font-bold text-2xl mb-8 tracking-tighter">hey, I'm Filippo 👋</h1>
+    <p class="prose prose-neutral dark:prose-invert">
+      I'm Filippo Benozzi, a developer and economic student with a deep passion for technology and
+      innovation. I hold a bachelor's degree in Computer Science and am currently pursuing a Master's
+      in <a target="_blank" rel="noopener noreferrer" href="https://www.unive.it/pag/24754/"
+        >Global Development and Entrepreneurship</a
+      > at the University of Venice.
+    </p>
+
+    <div class="prose prose-neutral dark:prose-invert">
+      <p>
+        For eight years, I worked as a web application developer in a web agency, where I honed my
+        skills in creating and optimizing digital solutions.<br />
+        Now, I'm the administrator of <a target="_blank" rel="noopener noreferrer" href="https://errebi.it"
+          >ErreBi Maglieria</a
+        >, a family-owned fashion business and together with my sister, I launched <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://coutique.com">Coutique</a
+        >, a premium brand that produces high-end clothing made with sustainable and natural fibers.<br
+        />
+        My passion for technology remains strong, driving my mission to digitize our entire company
+        using open-source software. Through this process, I aim to bring the open-source ethos into
+        leadership and management, fostering a culture of transparency and collaboration.
+      </p>
+    </div>
+    <div class="prose prose-neutral dark:prose-invert">
+      <p>
+        In my free time, I enjoy staying active with running, cycling, swimming.<br />
+        This space is where I share my journey be it about technology, entrepreneurship, or personal
+        growth. I hope it inspires and informs others as they navigate their own paths.
+      </p>
+    </div>
+
+    <ul class="flex flex-col md:flex-row mt-4 space-x-0 md:space-x-4 font-sm text-neutral-600 dark:text-neutral-300">
+      <li>
+        <a class="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all" href="/cv">
+          <ArrowIcon />
+          <p class="h-7 ml-2">my cv</p>
+        </a>
+      </li>
+      <li>
+        <a class="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all" href="/log">
+          <ArrowIcon />
+          <p class="h-7 ml-2">my log</p>
+        </a>
+      </li>
+    </ul>
+
+    <div class="my-8 flex flex-col space-y-4 w-full">
+      <h2 class="font-bold text-xl mb-2 mt-4 tracking-tighter">my writings</h2>
+      {
+        latestBlogs.map((post) => (
+          <a class="flex flex-col space-y-1 mb-4" href={`/blog/${post.slug}`}>
+            <div class="w-full flex flex-col">
+              <p class="text-neutral-900 font-semibold dark:text-neutral-100 tracking-tight">
+                {post.data.title}
+              </p>
+              <p class="text-neutral-400 text-sm dark:text-neutral-400">
+                {formatDate(post.data.publishedAt)}
+              </p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+    <div class="my-8 flex flex-col space-y-4 w-full">
+      <h2 class="font-bold text-xl mb-2 mt-4 tracking-tighter">my work</h2>
+
+      <ProjectLink
+        link="https://wordpress.org/plugins/popup-notifier-for-contact-form-7"
+        name="Popup Message Notifier for CF7"
+        desc="Simple Wordpress plugin that show confirmation and error messages for CF7."
+        opensource={true}
+      />
+      <ProjectLink
+        link="https://github.com/filippobenozzi/acf-boilerplate"
+        name="ACF Boilerplate"
+        desc="Starter for Wordpress with ACF. It's also already set-up for using and compiling SASS and ES6."
+        opensource={true}
+      />
+      <ProjectLink
+        link="https://progettoesordio.com"
+        name="Progetto Esordio"
+        desc="Open community that help people affcted by diabetes with professionals and digital materials."
+      />
+      <ProjectLink
+        link="https://www.edventurousleadership.com"
+        name="Edventurous Leadership"
+        desc="LMS that challenges different types of leaders to think more broadly about leadership."
+      />
+      <h3 class="font-bold text-base mt-4 tracking-tighter">other projects</h3>
+      <div class="flex flex-wrap w-full project-list text-sm">
+        <ProjectList name="Oikos" link="https://oikos.it/" />
+        <ProjectList name="Atlantis Caps" link="https://atlantisheadwear.com/" />
+        <ProjectList name="Dinamiza" link="https://dinamiza.it/" />
+        <ProjectList name="Segnobit" link="https://segnobit.com/" />
+        <ProjectList name="Frappa Edilizia" link="https://frappa.it/" />
+        <ProjectList name="Vega Carburanti" link="https://www.vegacarburanti.it/" />
+        <ProjectList name="Booking System" link="https://booking.alwaysgrowing.co.uk/" />
+      </div>
+    </div>
+    <ul
+      class="flex flex-col md:flex-row mt-12 space-x-0 md:space-x-4 space-y-2 md:space-y-0 font-sm text-neutral-600 dark:text-neutral-300"
+    >
+      <li>
+        <a
+          class="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+          rel="noopener noreferrer"
+          target="_blank"
+          href="mailto:email@filippo.im"
+        >
+          <ArrowIcon />
+          <p class="h-7 ml-2">email me</p>
+        </a>
+      </li>
+      <li>
+        <a
+          class="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://www.linkedin.com/in/filippobenozzi/"
+        >
+          <ArrowIcon />
+          <p class="h-7 ml-2">linkedin</p>
+        </a>
+      </li>
+      <li>
+        <a
+          class="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+          rel="noopener noreferrer me"
+          target="_blank"
+          href="https://bsky.app/profile/filippo.im"
+        >
+          <ArrowIcon />
+          <p class="h-7 ml-2">bluesky</p>
+        </a>
+      </li>
+      <li>
+        <a
+          class="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://www.strava.com/athletes/10859683"
+        >
+          <ArrowIcon />
+          <p class="h-7 ml-2">strava</p>
+        </a>
+      </li>
+    </ul>
+  </section>
+</BaseLayout>

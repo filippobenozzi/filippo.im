@@ -1,0 +1,77 @@
+---
+import Sidebar from '../components/Sidebar.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  publishedTime?: string;
+}
+
+const {
+  title,
+  description = 'Developer, Economic Student',
+  canonicalPath,
+  ogImage = '/og-bg.png',
+  ogType = 'website',
+  publishedTime,
+} = Astro.props;
+
+const siteUrl = 'https://filippo.im';
+const pageTitle = title
+  ? `${title} / Filippo Benozzi`
+  : 'Filippo Benozzi / Developer, Economic Student';
+const canonicalUrl = canonicalPath ? `${siteUrl}${canonicalPath}` : `${siteUrl}${Astro.url.pathname}`;
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const umamiHost = import.meta.env.PUBLIC_UMAMI_HOST;
+const umamiId = import.meta.env.PUBLIC_UMAMI_ID;
+---
+
+<!doctype html>
+<html lang="en" class="bg-neutral-50 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:title" content={title ?? 'Filippo Benozzi'} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Filippo Benozzi" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title ?? 'Filippo Benozzi'} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="googlebot"
+      content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+    />
+
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    <slot name="head" />
+
+    {
+      umamiHost && umamiId && (
+        <script async defer src={`${umamiHost}/script.js`} data-website-id={umamiId} />
+      )
+    }
+  </head>
+  <body class="antialiased max-w-2xl mb-40 flex flex-col md:flex-row mx-4 mt-8 lg:mx-auto">
+    <main class="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
+      <Sidebar pathname={Astro.url.pathname} />
+      <slot />
+    </main>
+  </body>
+</html>

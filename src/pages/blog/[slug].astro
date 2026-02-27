@@ -1,0 +1,60 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/date';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const ogImage = post.data.image ?? '/og-bg.png';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  datePublished: post.data.publishedAt,
+  dateModified: post.data.publishedAt,
+  description: post.data.summary,
+  image: `https://filippo.im${ogImage}`,
+  url: `https://filippo.im/blog/${post.slug}`,
+  author: {
+    '@type': 'Person',
+    name: 'Filippo Benozzi',
+  },
+};
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.summary}
+  canonicalPath={`/blog/${post.slug}`}
+  ogType="article"
+  ogImage={ogImage}
+  publishedTime={post.data.publishedAt}
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  <section>
+    <h1 class="font-bold text-2xl tracking-tighter max-w-[650px]">{post.data.title}</h1>
+    <div class="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
+      <p class="text-sm text-neutral-400 dark:text-neutral-400">
+        {formatDate(post.data.publishedAt, true)}
+      </p>
+    </div>
+    <article class="prose prose-quoteless prose-neutral dark:prose-invert">
+      <Content />
+    </article>
+  </section>
+</BaseLayout>

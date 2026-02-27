@@ -1,0 +1,21 @@
+---
+import OpenSourceIcon from './OpenSourceIcon.astro';
+
+interface Props {
+  link: string;
+  name: string;
+  opensource?: boolean;
+}
+
+const { link, name, opensource = false } = Astro.props;
+---
+
+<a
+  href={link}
+  target="_blank"
+  class="inline-flex hover:text-neutral-600 dark:hover:text-neutral-100 transition-all"
+  rel="noopener noreferrer"
+>
+  <p class="underline">{name}</p>
+  {opensource && <OpenSourceIcon />}
+</a>

@@ -1,0 +1,170 @@
+---
+import ArrowIcon from '../components/ArrowIcon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectLink from '../components/ProjectLink.astro';
+import ProjectList from '../components/ProjectList.astro';
+---
+
+<BaseLayout title="my cv" description="My philosophical quotes and thoughts about life." canonicalPath="/cv">
+  <section>
+    <h1 class="font-bold text-2xl mb-8 tracking-tighter">my cv</h1>
+    <div class="prose prose-neutral mb-8 dark:prose-invert">
+      <p>
+        I am Filippo Benozzi, a professional with an academic and professional background that bridges
+        computer science, entrepreneurship, and management.<br />
+        After completing my studies in Computer Science at the University of Trento, I pursued a degree
+        in Global Development and Entrepreneurship at the University of Venice to further expand my
+        expertise.
+      </p>
+      <p>
+        I worked for 7 years at a web agency in Mestre, where I honed and expanded the technical skills
+        I developed during my university studies. As a Front-End Developer, I consistently kept myself
+        updated by experimenting with new frameworks (especially about CSS and JavaScript) and attending
+        industry conferences.<br />
+        This experience strengthened my innovative approach and commitment to lifelong learning in a
+        rapidly evolving field.
+      </p>
+      <p>
+        Currently, I am the administrator of ErreBi SAS, my family’s company specializing in the
+        production and retail of knitwear. In addition, together with my sister, I co-founded Coutique,
+        a brand that merges tradition with sustainability, producing knitwear made from natural and/or
+        sustainable fibers.
+      </p>
+      <p>
+        With this new venture, I aim to combine my expertise in computer science with my experience in
+        economics, integrating the principles of open-source into management. This innovative approach
+        not only enhances business processes through digitalization but also fosters an inclusive and
+        collaborative leadership style.
+      </p>
+      <p>
+        As part of my commitment to innovation, I developed a purchase and sales analysis system that
+        incorporates external factors impacting the company. I have also coordinated events such as
+        fashion shows and photo shoots, managing their digital marketing strategies.
+      </p>
+      <p>
+        Each experience represents an opportunity for me to grow and make a meaningful contribution to
+        building innovative and sustainable ventures.
+      </p>
+      <h2 class="font-bold text-xl tracking-tighter">Work experience</h2>
+      <h3 class="mb-0 mt-6">
+        <a class="font-bold text-base tracking-tighter m-0" target="_blank" rel="noopener noreferrer" href="https://nehos.it"
+          >ErreBi Maglieria</a
+        >
+      </h3>
+      <p class="text-neutral-400 text-sm dark:text-neutral-400">Administrator // 2013 - present</p>
+      <p class="mt-0">
+        As the Administrator of ErreBi SAS, a family business specializing in the design, production, and
+        marketing of knitwear products, I oversee various strategic and operational aspects. I manage
+        digital marketing campaigns and lead the planning and execution of events such as fashion shows
+        and photo shoots. Additionally, I have developed a custom analysis tool that integrates internal
+        and external data to programmatically evaluate and enhance the company’s purchasing and sales
+        performance.
+      </p>
+      <p>
+        Furthermore, I am the co-founder of Coutique, a brand born from the vision of combining tradition
+        and sustainability, producing knitwear crafted with natural and sustainable yarns. This role
+        allows me to merge my expertise in technology and management, bringing innovative and sustainable
+        practices to the forefront of the business.
+      </p>
+      <h3 class="mb-0 mt-6">
+        <a class="font-bold text-base tracking-tighter m-0" target="_blank" rel="noopener noreferrer" href="https://nehos.it"
+          >Dinamiza by Nehos</a
+        >
+      </h3>
+      <p class="text-neutral-400 text-sm dark:text-neutral-400">Web Application Developer // 2017 - 2024</p>
+      <p class="mt-0">
+        I worked as a Front-End Developer specializing in the development of static and dynamic websites
+        and web applications. I created custom themes and maintained websites using popular CMS platforms
+        such as WordPress, Drupal, and Prestashop. In addition to delivering reliable and high-quality
+        solutions, I took the opportunity, particularly on creative projects, to experiment with
+        innovative CSS and JavaScript frameworks like React, Tailwind, GatsbyJS, NextJS, and Symfony,
+        continuously expanding my skill set and staying ahead in a rapidly evolving industry.
+      </p>
+      <h2 class="font-bold text-xl tracking-tighter">Education</h2>
+      <h3 class="mb-0 mt-6">
+        <a
+          class="font-bold text-base tracking-tighter m-0"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.unive.it/web/it/2508">Post-Graduate Degree in Global Development and Entrepereneurship</a
+        >
+      </h3>
+      <p class="text-neutral-400 text-sm dark:text-neutral-400">Ca' Foscari University, Venice // 2019 - present</p>
+      <h3 class="mb-0 mt-6">
+        <a
+          class="font-bold text-base tracking-tighter m-0"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://offertaformativa.unitn.it/en/lm/computer-science"
+          >Bachelor's Degree in Computer Science and Economics</a
+        >
+      </h3>
+      <p class="text-neutral-400 text-sm dark:text-neutral-400">University of Trento // 2014 - 2018</p>
+      <h2 class="font-bold text-xl tracking-tighter">Volunteering</h2>
+      <h3 class="mb-0 mt-6 font-bold text-base tracking-tighter">ProLoco di Zero Branco</h3>
+      <p class="text-neutral-400 text-sm dark:text-neutral-400">2010 - 2018</p>
+      <p class="mt-0">
+        I worked with a local volunteer association dedicated to promoting the region, contributing to
+        the organization of events, managing advertising campaigns, designing signage, and developing
+        computerized order management systems.
+      </p>
+      <h3 class="mb-0 mt-6 font-bold text-base tracking-tighter">Elderly club of Zero Branco</h3>
+      <p class="text-neutral-400 text-sm dark:text-neutral-400">2013 - 2016</p>
+      <p class="mt-0">
+        For three years, I designed and conducted computer and smartphone usage courses for the senior
+        citizens' club in my hometown. These courses aimed to bridge the digital divide, empowering
+        participants to navigate technology confidently and improving their digital literacy. This
+        experience allowed me to develop strong communication and teaching skills, as well as a deep
+        understanding of how to adapt technical concepts to different audiences.
+      </p>
+      <h2 class="font-bold text-xl tracking-tighter">Projects & Works</h2>
+    </div>
+    <div>
+      <ProjectLink
+        link="https://wordpress.org/plugins/popup-notifier-for-contact-form-7"
+        name="Popup Message Notifier for CF7"
+        desc="Simple Wordpress plugin that show confirmation and error messages for CF7."
+        opensource={true}
+      />
+      <ProjectLink
+        link="https://github.com/filippobenozzi/acf-boilerplate"
+        name="ACF Boilerplate"
+        desc="Starter for Wordpress with ACF. It's also already set-up for using and compiling SASS and ES6."
+        opensource={true}
+      />
+      <ProjectLink
+        link="https://progettoesordio.com"
+        name="Progetto Esordio"
+        desc="Open community that help people affcted by diabetes with professionals and digital materials."
+      />
+      <ProjectLink
+        link="https://www.edventurousleadership.com"
+        name="Edventurous Leadership"
+        desc="LMS that challenges different types of leaders to think more broadly about leadership."
+      />
+      <h3 class="font-bold text-base mt-4 tracking-tighter">other projects</h3>
+      <div class="flex flex-wrap w-full project-list text-sm">
+        <ProjectList name="Oikos" link="https://oikos.it/" />
+        <ProjectList name="Atlantis Caps" link="https://atlantisheadwear.com/" />
+        <ProjectList name="Dinamiza" link="https://dinamiza.it/" />
+        <ProjectList name="Segnobit" link="https://segnobit.com/" />
+        <ProjectList name="Frappa Edilizia" link="https://frappa.it/" />
+        <ProjectList name="Vega Carburanti" link="https://www.vegacarburanti.it/" />
+        <ProjectList name="Booking System" link="https://booking.alwaysgrowing.co.uk/" />
+      </div>
+    </div>
+    <ul class="flex flex-col md:flex-row mt-12 space-x-0 md:space-x-4 space-y-2 md:space-y-0 font-sm text-neutral-600 dark:text-neutral-300">
+      <li>
+        <a
+          class="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+          rel="noopener noreferrer"
+          target="_blank"
+          href="mailto:email@filippo.im"
+        >
+          <ArrowIcon />
+          <p class="h-7 ml-2">email me</p>
+        </a>
+      </li>
+    </ul>
+  </section>
+</BaseLayout>

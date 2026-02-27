@@ -1,0 +1,27 @@
+---
+import MarkdownIt from 'markdown-it';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import logContentRaw from '../../content/log.md?raw';
+
+const md = new MarkdownIt({ breaks: true, linkify: true });
+const content = md.render(logContentRaw);
+---
+
+<BaseLayout
+  title="log"
+  description="Read my thoughts on software development, design, and more."
+  canonicalPath="/log"
+>
+  <section>
+    <h1 class="font-bold text-2xl mb-8 tracking-tighter">my log</h1>
+    <div class="prose prose-neutral mb-8 dark:prose-invert">
+      <p>
+        This is my personal log useful also for me, synced with Obsidian, where I share all the
+        insightful pills and interesting resources I discover.
+      </p>
+    </div>
+    <article class="log prose prose-quoteless prose-neutral dark:prose-invert">
+      <div set:html={content} />
+    </article>
+  </section>
+</BaseLayout>
