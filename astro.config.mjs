@@ -11,6 +11,16 @@ import rehypeExternalLinks from 'rehype-external-links';
 export default defineConfig({
   site: 'https://filippo.im',
   output: 'static',
+  vite: {
+    server: {
+      host: true,
+      allowedHosts: ['filippo.im', '.filippo.im', 'localhost'],
+    },
+    preview: {
+      host: true,
+      allowedHosts: ['filippo.im', '.filippo.im', 'localhost'],
+    },
+  },
   integrations: [tailwind(), mdx(), sitemap()],
   markdown: {
     remarkPlugins: [remarkGfm],
