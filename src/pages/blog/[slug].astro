@@ -13,18 +13,19 @@ export async function getStaticPaths() {
 
       return {
         params: { slug },
-        props: { post, slug },
       };
     })
     .filter((entry) => Boolean(entry.params.slug));
 }
 
-interface Props {
-  post: CollectionEntry<'blog'>;
-  slug: string;
+const slug = Astro.params.slug ?? '';
+const posts = await getCollection('blog');
+const post = posts.find((entry: CollectionEntry<'blog'>) => getBlogSlug(entry) === slug);
+
+if (!post) {
+  throw new Error(`Blog post not found for slug: ${slug}`);
 }
 
-const { post, slug } = Astro.props;
 const { Content } = await post.render();
 
 const ogImage = post.data.image ?? '/og-bg.png';
