@@ -14,11 +14,11 @@ export default defineConfig({
   vite: {
     server: {
       host: true,
-      allowedHosts: ['filippo.im', '.filippo.im', 'localhost'],
+      allowedHosts: true,
     },
     preview: {
       host: true,
-      allowedHosts: ['filippo.im', '.filippo.im', 'localhost'],
+      allowedHosts: true,
     },
   },
   integrations: [tailwind(), mdx(), sitemap()],
