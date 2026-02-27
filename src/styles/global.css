@@ -6,8 +6,8 @@
   --fx-bg: #fffcf0;
   --fx-bg-subtle: #f2f0e5;
   --fx-border: #dad8ce;
-  --fx-text: #100f0f;
-  --fx-text-muted: #6f6e69;
+  --fx-text: rgb(206, 205, 195);
+  --fx-text-muted: rgb(206, 205, 195);
   --fx-selection: rgba(173, 131, 1, 0.24);
 }
 
@@ -16,8 +16,8 @@
     --fx-bg: #100f0f;
     --fx-bg-subtle: #1c1b1a;
     --fx-border: #343331;
-    --fx-text: #e6e4d9;
-    --fx-text-muted: #9f9d96;
+    --fx-text: rgb(206, 205, 195);
+    --fx-text-muted: rgb(206, 205, 195);
     --fx-selection: rgba(173, 131, 1, 0.3);
   }
 }
@@ -72,6 +72,7 @@ h6 {
 h1,
 h2,
 h3,
+.font-bold,
 h4{
   font-weight: 500;
 }
@@ -225,4 +226,9 @@ table {
 .log em {
   font-size: 70%;
   width: 100%;
+}
+
+body,
+body * {
+  color: rgb(206, 205, 195) !important;
 }
