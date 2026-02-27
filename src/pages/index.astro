@@ -70,7 +70,7 @@ const latestBlogs = allBlogs.slice(0, 2);
         latestBlogs.map((post) => (
           <a class="flex flex-col space-y-1 mb-4" href={`/blog/${getBlogSlug(post)}`}>
             <div class="w-full flex flex-col">
-              <p class="text-neutral-900 font-semibold dark:text-neutral-100 tracking-tight">
+              <p class="text-neutral-900 font-semibold dark:text-neutral-100 tracking-tight underline">
                 {post.data.title}
               </p>
               <p class="text-neutral-400 text-sm dark:text-neutral-400">
@@ -129,28 +129,6 @@ const latestBlogs = allBlogs.slice(0, 2);
         >
           <ArrowIcon />
           <p class="h-7 ml-2">email me</p>
-        </a>
-      </li>
-      <li>
-        <a
-          class="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
-          rel="noopener noreferrer"
-          target="_blank"
-          href="https://www.linkedin.com/in/filippobenozzi/"
-        >
-          <ArrowIcon />
-          <p class="h-7 ml-2">linkedin</p>
-        </a>
-      </li>
-      <li>
-        <a
-          class="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
-          rel="noopener noreferrer me"
-          target="_blank"
-          href="https://bsky.app/profile/filippo.im"
-        >
-          <ArrowIcon />
-          <p class="h-7 ml-2">bluesky</p>
         </a>
       </li>
       <li>
