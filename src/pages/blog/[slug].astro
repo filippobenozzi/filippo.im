@@ -1,5 +1,5 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getBlogSlug } from '../../lib/blog';
 import { formatDate } from '../../lib/date';
@@ -26,7 +26,7 @@ if (!post) {
   throw new Error(`Blog post not found for slug: ${slug}`);
 }
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 const ogImage = post.data.image ?? '/og-bg.png';
 
