@@ -6,7 +6,7 @@ export default {
     './src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}',
     './content/**/*.{md,mdx}',
   ],
-  darkMode: 'media',
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {

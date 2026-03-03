@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+
 interface Props {
   pathname: string;
 }
@@ -48,5 +50,6 @@ const normalizedPath = pathname.includes('/blog/') ? '/blog' : pathname;
         })}
       </div>
     </nav>
+    <ThemeToggle />
   </div>
 </aside>

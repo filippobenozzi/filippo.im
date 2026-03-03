@@ -1,5 +1,6 @@
 ---
 import Sidebar from '../components/Sidebar.astro';
+import { getOgImageFromPath } from '../lib/og';
 import '../styles/global.css';
 
 interface Props {
@@ -15,17 +16,20 @@ const {
   title,
   description = 'Developer, Economic Student',
   canonicalPath,
-  ogImage = '/og-bg.png',
+  ogImage,
   ogType = 'website',
   publishedTime,
 } = Astro.props;
 
 const siteUrl = 'https://filippo.im';
+const pagePath = canonicalPath ?? Astro.url.pathname;
 const pageTitle = title
   ? `${title} / Filippo Benozzi`
   : 'Filippo Benozzi / Developer, Economic Student';
-const canonicalUrl = canonicalPath ? `${siteUrl}${canonicalPath}` : `${siteUrl}${Astro.url.pathname}`;
-const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const canonicalUrl = `${siteUrl}${pagePath}`;
+const fallbackOgImage = getOgImageFromPath(pagePath);
+const resolvedOgImage = ogImage ?? fallbackOgImage;
+const ogImageUrl = resolvedOgImage.startsWith('http') ? resolvedOgImage : `${siteUrl}${resolvedOgImage}`;
 const umamiHost = import.meta.env.PUBLIC_UMAMI_HOST;
 const umamiId = import.meta.env.PUBLIC_UMAMI_ID;
 ---
@@ -35,6 +39,22 @@ const umamiId = import.meta.env.PUBLIC_UMAMI_ID;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      (() => {
+        const key = 'theme-preference';
+        const root = document.documentElement;
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+        const stored = localStorage.getItem(key);
+        const preference =
+          stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';
+        const resolved = preference === 'system' ? (media.matches ? 'dark' : 'light') : preference;
+
+        root.dataset.themePreference = preference;
+        root.classList.remove('light', 'dark');
+        root.classList.add(resolved);
+        root.style.colorScheme = resolved;
+      })();
+    </script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />

@@ -3,6 +3,7 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getBlogSlug } from '../../lib/blog';
 import { formatDate } from '../../lib/date';
+import { getOgImageFromPath } from '../../lib/og';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -28,7 +29,8 @@ if (!post) {
 
 const { Content } = await render(post);
 
-const ogImage = post.data.image ?? '/og-bg.png';
+const ogImage = post.data.image ?? getOgImageFromPath(`/blog/${slug}`);
+const structuredDataImage = ogImage.startsWith('http') ? ogImage : `https://filippo.im${ogImage}`;
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -37,7 +39,7 @@ const structuredData = {
   datePublished: post.data.publishedAt,
   dateModified: post.data.publishedAt,
   description: post.data.summary,
-  image: `https://filippo.im${ogImage}`,
+  image: structuredDataImage,
   url: `https://filippo.im/blog/${slug}`,
   author: {
     '@type': 'Person',

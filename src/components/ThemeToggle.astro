@@ -1,0 +1,79 @@
+<button
+  type="button"
+  class="theme-toggle mt-4 ml-2 text-sm"
+  data-theme-toggle
+  aria-label="Theme: system"
+>
+  theme: system
+</button>
+
+<script is:inline>
+  (() => {
+    const key = 'theme-preference';
+    const options = ['light', 'dark', 'system'];
+    const labels = {
+      light: 'theme: light',
+      dark: 'theme: dark',
+      system: 'theme: system',
+    };
+
+    const button = document.querySelector('[data-theme-toggle]');
+    if (!button) return;
+
+    const root = document.documentElement;
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const getStoredPreference = () => {
+      const value = localStorage.getItem(key);
+      if (value === 'light' || value === 'dark' || value === 'system') {
+        return value;
+      }
+      return 'system';
+    };
+
+    const resolvePreference = (preference) => {
+      if (preference === 'system') {
+        return media.matches ? 'dark' : 'light';
+      }
+      return preference;
+    };
+
+    const applyPreference = (preference, persist = false) => {
+      const resolved = resolvePreference(preference);
+
+      if (persist) {
+        localStorage.setItem(key, preference);
+      }
+
+      root.dataset.themePreference = preference;
+      root.classList.remove('light', 'dark');
+      root.classList.add(resolved);
+      root.style.colorScheme = resolved;
+
+      button.textContent = labels[preference];
+      button.setAttribute('aria-label', `Theme: ${preference}`);
+    };
+
+    const initial = root.dataset.themePreference || getStoredPreference();
+    applyPreference(initial, false);
+
+    const onSystemChange = () => {
+      if ((root.dataset.themePreference || 'system') === 'system') {
+        applyPreference('system', false);
+      }
+    };
+
+    if (typeof media.addEventListener === 'function') {
+      media.addEventListener('change', onSystemChange);
+    } else {
+      media.addListener(onSystemChange);
+    }
+
+    button.addEventListener('click', () => {
+      const current = root.dataset.themePreference || 'system';
+      const index = options.indexOf(current);
+      const next = options[(index + 1) % options.length];
+      applyPreference(next, true);
+    });
+  })();
+</script>
