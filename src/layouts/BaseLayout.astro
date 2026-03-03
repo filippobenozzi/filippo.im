@@ -35,7 +35,7 @@ const umamiId = import.meta.env.PUBLIC_UMAMI_ID;
 ---
 
 <!doctype html>
-<html lang="en" class="bg-neutral-50 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-100">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,11 +45,9 @@ const umamiId = import.meta.env.PUBLIC_UMAMI_ID;
         const root = document.documentElement;
         const media = window.matchMedia('(prefers-color-scheme: dark)');
         const stored = localStorage.getItem(key);
-        const preference =
-          stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';
-        const resolved = preference === 'system' ? (media.matches ? 'dark' : 'light') : preference;
+        const hasStoredPreference = stored === 'light' || stored === 'dark';
+        const resolved = hasStoredPreference ? stored : media.matches ? 'dark' : 'light';
 
-        root.dataset.themePreference = preference;
         root.classList.remove('light', 'dark');
         root.classList.add(resolved);
         root.style.colorScheme = resolved;
@@ -88,10 +86,12 @@ const umamiId = import.meta.env.PUBLIC_UMAMI_ID;
       )
     }
   </head>
-  <body class="antialiased max-w-2xl mb-40 flex flex-col md:flex-row mx-4 mt-8 lg:mx-auto">
-    <main class="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
-      <Sidebar pathname={Astro.url.pathname} />
-      <slot />
-    </main>
+  <body class="antialiased">
+    <div class="mx-4 mt-8 mb-40 flex max-w-2xl flex-col md:flex-row lg:mx-auto">
+      <main class="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
+        <Sidebar pathname={Astro.url.pathname} />
+        <slot />
+      </main>
+    </div>
   </body>
 </html>

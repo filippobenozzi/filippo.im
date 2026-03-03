@@ -15,7 +15,7 @@ export function getOgSlugFromPath(path: string): string {
 }
 
 export function getOgImageFromPath(path: string): string {
-  return `/og/${getOgSlugFromPath(path)}.svg`;
+  return `/og/${getOgSlugFromPath(path)}.jpg`;
 }
 
 export function escapeSvgText(value: string): string {

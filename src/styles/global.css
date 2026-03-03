@@ -11,17 +11,6 @@
   --fx-selection: rgba(173, 131, 1, 0.24);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --fx-bg: #100f0f;
-    --fx-bg-subtle: #1c1b1a;
-    --fx-border: #343331;
-    --fx-text: #cecdc3;
-    --fx-text-muted: #878580;
-    --fx-selection: rgba(173, 131, 1, 0.3);
-  }
-}
-
 :root.light {
   --fx-bg: #fffcf0;
   --fx-bg-subtle: #f2f0e5;
@@ -36,6 +25,7 @@
   --fx-border: #343331;
   --fx-text: #cecdc3;
   --fx-text-muted: #878580;
+  --fx-selection: rgba(173, 131, 1, 0.3);
 }
 
 ::selection {
@@ -44,6 +34,7 @@
 
 html {
   min-width: 360px;
+  min-height: 100%;
   font-size: clamp(16px, 0.95rem + 0.25vw, 18px);
   font-family: -apple-system, BlinkMacSystemFont, Inter, 'IBM Plex Sans', 'Segoe UI', Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -53,6 +44,7 @@ html {
 }
 
 body {
+  min-height: 100vh;
   background-color: var(--fx-bg);
   color: var(--fx-text);
   line-height: 1.65;
@@ -91,6 +83,11 @@ h4{
 }
 
 .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
   border: 1px solid var(--fx-border);
   border-radius: 9999px;
   background: transparent;
@@ -102,6 +99,25 @@ h4{
 .theme-toggle:hover {
   color: var(--fx-text);
   background: var(--fx-bg-subtle);
+}
+
+.theme-icon {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: none;
+}
+
+.theme-toggle[data-theme='light'] .icon-sun {
+  display: block;
+}
+
+.theme-toggle[data-theme='dark'] .icon-moon {
+  display: block;
 }
 
 .prose .anchor {

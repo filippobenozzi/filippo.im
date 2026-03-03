@@ -21,6 +21,7 @@ bun run build
 ```
 
 Build output is generated in `dist/`.
+During build, OG images are generated as JPG files in `public/og/`.
 
 ## Preview production build
 

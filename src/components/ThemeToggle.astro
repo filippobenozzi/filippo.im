@@ -1,79 +1,70 @@
 <button
   type="button"
-  class="theme-toggle mt-4 ml-2 text-sm"
+  class="theme-toggle mt-4 ml-2"
   data-theme-toggle
-  aria-label="Theme: system"
+  aria-label="Passa al tema scuro"
 >
-  theme: system
+  <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2"></path>
+    <path d="M12 20v2"></path>
+    <path d="M4.93 4.93l1.41 1.41"></path>
+    <path d="M17.66 17.66l1.41 1.41"></path>
+    <path d="M2 12h2"></path>
+    <path d="M20 12h2"></path>
+    <path d="M4.93 19.07l1.41-1.41"></path>
+    <path d="M17.66 6.34l1.41-1.41"></path>
+  </svg>
+  <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+  </svg>
 </button>
 
 <script is:inline>
   (() => {
     const key = 'theme-preference';
-    const options = ['light', 'dark', 'system'];
-    const labels = {
-      light: 'theme: light',
-      dark: 'theme: dark',
-      system: 'theme: system',
-    };
+    const options = ['light', 'dark'];
 
     const button = document.querySelector('[data-theme-toggle]');
     if (!button) return;
 
     const root = document.documentElement;
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
 
-    const getStoredPreference = () => {
+    const getStoredTheme = () => {
       const value = localStorage.getItem(key);
-      if (value === 'light' || value === 'dark' || value === 'system') {
+      if (value === 'light' || value === 'dark') {
         return value;
       }
-      return 'system';
+      return null;
     };
 
-    const resolvePreference = (preference) => {
-      if (preference === 'system') {
-        return media.matches ? 'dark' : 'light';
-      }
-      return preference;
-    };
-
-    const applyPreference = (preference, persist = false) => {
-      const resolved = resolvePreference(preference);
+    const applyTheme = (theme, persist = false) => {
+      const resolved = theme === 'dark' ? 'dark' : 'light';
 
       if (persist) {
-        localStorage.setItem(key, preference);
+        localStorage.setItem(key, resolved);
       }
 
-      root.dataset.themePreference = preference;
       root.classList.remove('light', 'dark');
       root.classList.add(resolved);
       root.style.colorScheme = resolved;
 
-      button.textContent = labels[preference];
-      button.setAttribute('aria-label', `Theme: ${preference}`);
-    };
-
-    const initial = root.dataset.themePreference || getStoredPreference();
-    applyPreference(initial, false);
-
-    const onSystemChange = () => {
-      if ((root.dataset.themePreference || 'system') === 'system') {
-        applyPreference('system', false);
-      }
-    };
-
-    if (typeof media.addEventListener === 'function') {
-      media.addEventListener('change', onSystemChange);
-    } else {
-      media.addListener(onSystemChange);
+      button.dataset.theme = resolved;
+      button.setAttribute(
+        'aria-label',
+        resolved === 'dark' ? 'Passa al tema chiaro' : 'Passa al tema scuro'
+      );
     }
 
+    const classTheme = root.classList.contains('dark') ? 'dark' : 'light';
+    const storedTheme = getStoredTheme();
+    applyTheme(storedTheme ?? classTheme, false);
+
     button.addEventListener('click', () => {
-      const current = root.dataset.themePreference || 'system';
+      const current = root.classList.contains('dark') ? 'dark' : 'light';
       const index = options.indexOf(current);
       const next = options[(index + 1) % options.length];
-      applyPreference(next, true);
+      applyTheme(next, true);
     });
   })();
 </script>
