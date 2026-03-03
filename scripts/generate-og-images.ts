@@ -7,6 +7,8 @@ const ROOT = process.cwd();
 const BLOG_DIR = path.join(ROOT, 'content', 'blog');
 const OG_DIR = path.join(ROOT, 'public', 'og');
 const BG_FILE = path.join(ROOT, 'public', 'og-bg.png');
+const FONT_REGULAR_FILE = path.join(ROOT, 'public', 'fonts', 'Graphik-Regular.ttf');
+const FONT_MEDIUM_FILE = path.join(ROOT, 'public', 'fonts', 'Graphik-Medium.ttf');
 
 const STATIC_PAGES = [
   { path: '/', title: 'Filippo Benozzi' },
@@ -78,20 +80,55 @@ function getBlogSlugFromFile(filePath: string): string {
   return segments[segments.length - 1] ?? normalized;
 }
 
-function buildTextSvg(title: string): Buffer {
+let fontStyleBlock = '';
+
+async function getFontStyleBlock(): Promise<string> {
+  if (fontStyleBlock) {
+    return fontStyleBlock;
+  }
+
+  const [regularBuffer, mediumBuffer] = await Promise.all([
+    fs.readFile(FONT_REGULAR_FILE),
+    fs.readFile(FONT_MEDIUM_FILE),
+  ]);
+
+  const regularBase64 = regularBuffer.toString('base64');
+  const mediumBase64 = mediumBuffer.toString('base64');
+
+  fontStyleBlock = `<style>
+@font-face {
+  font-family: 'OGGraphik';
+  src: url("data:font/ttf;base64,${regularBase64}") format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OGGraphik';
+  src: url("data:font/ttf;base64,${mediumBase64}") format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+</style>`;
+
+  return fontStyleBlock;
+}
+
+async function buildTextSvg(title: string): Promise<Buffer> {
   const lines = wrapTitle(title, 26, 3).map((line) => escapeSvgText(line));
   const baseY = 290;
   const lineHeight = 92;
+  const styles = await getFontStyleBlock();
   const textNodes = lines
     .map(
       (line, i) =>
-        `<text x="120" y="${baseY + i * lineHeight}" fill="#E6E4D9" font-family="'Kaisei Tokumin', Georgia, serif" font-size="78" font-weight="700">${line}</text>`
+        `<text x="120" y="${baseY + i * lineHeight}" fill="#E6E4D9" font-family="'OGGraphik', 'Arial', sans-serif" font-size="72" font-weight="600">${line}</text>`
     )
     .join('');
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  ${styles}
   <rect width="1200" height="630" fill="transparent"/>
-  <text x="120" y="140" fill="#878580" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="34" letter-spacing="1">filippo.im</text>
+  <text x="120" y="140" fill="#878580" font-family="'OGGraphik', 'Arial', sans-serif" font-size="34" letter-spacing="1">filippo.im</text>
   ${textNodes}
 </svg>`;
 
@@ -99,7 +136,7 @@ function buildTextSvg(title: string): Buffer {
 }
 
 async function generateOgImage(title: string, outputPath: string): Promise<void> {
-  const overlay = buildTextSvg(title);
+  const overlay = await buildTextSvg(title);
   const background = await sharp(BG_FILE).resize(1200, 630, { fit: 'cover' }).toBuffer();
 
   await sharp(background)

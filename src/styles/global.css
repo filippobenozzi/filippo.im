@@ -53,6 +53,9 @@ body {
 
 a {
   color: inherit;
+}
+
+.underline {
   text-decoration-line: underline;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.14em;
@@ -83,27 +86,26 @@ h4{
 }
 
 .theme-toggle {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.1rem;
-  height: 2.1rem;
-  border: 1px solid var(--fx-border);
-  border-radius: 9999px;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0;
   background: transparent;
   color: var(--fx-text-muted);
-  padding: 0.35rem 0.7rem;
+  padding: 0;
   line-height: 1;
 }
 
 .theme-toggle:hover {
   color: var(--fx-text);
-  background: var(--fx-bg-subtle);
+  background: transparent;
 }
 
 .theme-icon {
-  width: 1rem;
-  height: 1rem;
+  width: 1.1rem;
+  height: 1.1rem;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.8;
