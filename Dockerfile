@@ -1,6 +1,7 @@
 FROM oven/bun:alpine AS builder
 
 WORKDIR /app
+RUN apk add --no-cache fontconfig ttf-dejavu
 COPY package.json ./
 RUN bun install
 COPY . .
