@@ -16,7 +16,9 @@ else
 fi
 
 echo "Building and starting Docker containers..."
-docker compose up --build -d
+# Fresh CACHEBUST each run forces the image build (and the CouchDB log sync) to
+# re-run even when `git pull` brought no changes, so new Obsidian notes publish.
+CACHEBUST=$(date +%s) docker compose up --build -d
 
 if ! docker compose ps | grep -q "Up"; then
   echo "Docker containers failed to start. Check logs with 'docker compose logs'."

@@ -34,12 +34,16 @@ At build time `scripts/sync-log.ts` reconstructs each note from CouchDB, downloa
 the images it embeds into `public/log-media/`, and writes the posts into
 `content/log/` (a generated, git-ignored collection). Nothing is fetched at
 runtime — the result is plain static HTML, so **publishing a new note means
-rebuilding the site**.
+rebuilding the site**. `./update.sh` forces a fresh image build (and re-sync) on
+every run via a Docker cache-bust, so re-running it picks up new notes even when
+`git pull` brought no repo changes.
 
 Configure the connection in `.env` (see `.env.example`): `COUCHDB_URL`,
 `COUCHDB_DB`, `COUCHDB_USER`, `COUCHDB_PASSWORD`, `LOG_FOLDER`. If they are not
-set, the sync is skipped and the build still succeeds. Run the sync on its own
-with:
+set, the sync is skipped and the build still succeeds. On the deploy host keep
+this `.env` in the project directory — it is git-ignored (so `git pull` won't
+bring it), is read only during the Docker build, and never lands in the final
+image. Run the sync on its own with:
 
 ```bash
 bun run sync:log

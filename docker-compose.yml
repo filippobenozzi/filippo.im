@@ -1,6 +1,9 @@
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        CACHEBUST: ${CACHEBUST:-0}
     ports:
       - '3000:80'
     restart: unless-stopped
