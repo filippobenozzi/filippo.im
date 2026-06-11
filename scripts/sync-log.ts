@@ -132,6 +132,32 @@ function isDeleted(doc: LiveSyncDoc): boolean {
   return Boolean(doc.deleted || doc._deleted);
 }
 
+/**
+ * Split leading YAML front matter off a note. Returns the `title` only when it
+ * is actually set (an empty `title:` is treated as absent) and the body with the
+ * front matter removed.
+ */
+function splitFrontmatter(markdown: string): { title?: string; body: string } {
+  const match = markdown.match(/^﻿?---\r?\n([\s\S]*?)\r?\n---[ \t]*\r?\n?/);
+  if (!match) return { body: markdown };
+
+  let title: string | undefined;
+  for (const line of match[1].split(/\r?\n/)) {
+    const m = line.match(/^title:\s*(.*)$/i);
+    if (m) {
+      const raw = m[1].trim().replace(/^['"]|['"]$/g, '').trim();
+      if (raw) title = raw;
+      break;
+    }
+  }
+  return { title, body: markdown.slice(match[0].length) };
+}
+
+/** Double-quote and escape a string for use as a YAML front matter value. */
+function yamlQuote(value: string): string {
+  return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+}
+
 function safeMediaName(attachmentPath: string): string {
   return attachmentPath.replace(/^\/+/, '').replace(/[^a-zA-Z0-9._-]+/g, '-');
 }
@@ -234,17 +260,16 @@ async function main(): Promise<void> {
   // 3. Bulk-fetch the text chunks for all notes, then assemble each body.
   const noteChunkIds = dated.flatMap(({ doc }) => missingChunkIds(doc));
   const noteChunks = await bulkDocs(noteChunkIds);
-  const assembled = dated.map(({ doc, date }) => ({
-    date,
-    id: doc._id,
-    text: assembleText(doc, noteChunks),
-  }));
+  const assembled = dated.map(({ doc, date }) => {
+    const { title, body } = splitFrontmatter(assembleText(doc, noteChunks));
+    return { date, id: doc._id, title, body };
+  });
 
   // 4. Find embedded attachments across all notes and resolve them to doc ids.
   const wanted = new Map<string, string>(); // attachment docId -> media url
   const referenced: { ref: string; resolved: string | null }[] = [];
   for (const note of assembled) {
-    for (const ref of findReferences(note.text)) {
+    for (const ref of findReferences(note.body)) {
       const resolved = resolveTarget(ref, pathIndex);
       referenced.push({ ref, resolved });
       if (resolved && IMAGE_EXT_RE.test(resolved) && !wanted.has(resolved)) {
@@ -274,8 +299,9 @@ async function main(): Promise<void> {
   // 6. Rewrite Obsidian syntax to plain markdown and write the collection.
   await ensureCleanDir(CONTENT_DIR);
   for (const note of assembled) {
-    const body = rewriteMarkdown(note.text, pathIndex, wanted);
-    const frontmatter = `---\ndate: '${note.date}'\n---\n\n`;
+    const body = rewriteMarkdown(note.body, pathIndex, wanted);
+    const titleLine = note.title ? `\ntitle: ${yamlQuote(note.title)}` : '';
+    const frontmatter = `---\ndate: '${note.date}'${titleLine}\n---\n\n`;
     await fs.writeFile(path.join(CONTENT_DIR, `${note.date}.md`), frontmatter + body.trim() + '\n');
   }
 

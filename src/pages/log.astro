@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatDateShort } from '../lib/date';
-import { logPostPath } from '../lib/log';
 
 const entries = (await getCollection('log')).sort((a, b) => (a.data.date < b.data.date ? 1 : -1));
 
@@ -11,8 +10,9 @@ const posts = await Promise.all(
     const { Content } = await render(entry);
     return {
       Content,
-      href: logPostPath(entry.data.date),
-      label: formatDateShort(entry.data.date),
+      date: entry.data.date,
+      dateLabel: formatDateShort(entry.data.date),
+      title: entry.data.title,
     };
   })
 );
@@ -28,7 +28,7 @@ const posts = await Promise.all(
     <div class="prose prose-neutral mb-12 dark:prose-invert">
       <p>
         This is my personal log, synced from Obsidian — short notes, links and pills I want to
-        remember. Every day has its own page.
+        remember.
       </p>
     </div>
 
@@ -37,14 +37,27 @@ const posts = await Promise.all(
         <p class="text-sm text-neutral-400 dark:text-neutral-400">Nothing here yet.</p>
       ) : (
         <div class="flex flex-col">
-          {posts.map(({ Content, href, label }) => (
-            <article class="log-entry relative mb-14 lg:mb-20">
+          {posts.map(({ Content, date, dateLabel, title }) => (
+            <article id={date} class="log-entry relative mb-14 scroll-mt-24 lg:mb-20">
               <header class="mb-2 lg:mb-0 lg:absolute lg:right-full lg:mr-6 lg:w-32 lg:pt-1 lg:text-right">
                 <a
-                  href={href}
-                  class="text-sm whitespace-nowrap text-neutral-400 transition-colors hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-300"
+                  href={`#${date}`}
+                  class="block text-sm text-neutral-400 transition-colors hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-300"
                 >
-                  <time datetime={href.split('/').pop()}>{label}</time>
+                  {title ? (
+                    <>
+                      <span class="block font-medium text-neutral-500 dark:text-neutral-300">
+                        {title}
+                      </span>
+                      <time datetime={date} class="mt-0.5 block whitespace-nowrap text-xs opacity-80">
+                        {dateLabel}
+                      </time>
+                    </>
+                  ) : (
+                    <time datetime={date} class="whitespace-nowrap">
+                      {dateLabel}
+                    </time>
+                  )}
                 </a>
               </header>
               <div class="prose prose-quoteless prose-neutral dark:prose-invert">
