@@ -16,4 +16,16 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+// Synced from Obsidian by scripts/sync-log.ts into content/log (generated).
+const log = defineCollection({
+  loader: glob({
+    pattern: '**/*.md',
+    base: './content/log',
+  }),
+  schema: z.object({
+    date: z.string(),
+    title: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, log };

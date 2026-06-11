@@ -1,0 +1,64 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/date';
+import { logExcerpt, logPostPath } from '../../lib/log';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('log');
+  return entries.map((entry) => ({
+    params: { date: logPostPath(entry.data.date).replace(/^\/log\//, '') },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'log'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const canonicalPath = logPostPath(entry.data.date);
+const heading = entry.data.title ?? formatDate(entry.data.date);
+const description = logExcerpt(entry.body ?? '') || `Log entry from ${formatDate(entry.data.date)}.`;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: heading,
+  datePublished: entry.data.date,
+  dateModified: entry.data.date,
+  description,
+  url: `https://filippo.im${canonicalPath}`,
+  author: {
+    '@type': 'Person',
+    name: 'Filippo Benozzi',
+  },
+};
+---
+
+<BaseLayout
+  title={heading}
+  description={description}
+  canonicalPath={canonicalPath}
+  ogType="article"
+  ogImage="/og/log.jpg"
+  publishedTime={entry.data.date}
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <section>
+    <h1 class="font-bold text-2xl">{heading}</h1>
+    <div class="mt-2 mb-8">
+      <a
+        href="/log"
+        class="text-sm text-neutral-400 transition-colors hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-300"
+      >
+        ← back to log
+      </a>
+    </div>
+    <article class="prose prose-quoteless prose-neutral dark:prose-invert">
+      <Content />
+    </article>
+  </section>
+</BaseLayout>

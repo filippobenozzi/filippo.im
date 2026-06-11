@@ -1,27 +1,59 @@
 ---
-import MarkdownIt from 'markdown-it';
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import logContentRaw from '../../content/log.md?raw';
+import { formatDateShort } from '../lib/date';
+import { logPostPath } from '../lib/log';
 
-const md = new MarkdownIt({ breaks: true, linkify: true });
-const content = md.render(logContentRaw);
+const entries = (await getCollection('log')).sort((a, b) => (a.data.date < b.data.date ? 1 : -1));
+
+const posts = await Promise.all(
+  entries.map(async (entry) => {
+    const { Content } = await render(entry);
+    return {
+      Content,
+      href: logPostPath(entry.data.date),
+      label: formatDateShort(entry.data.date),
+    };
+  })
+);
 ---
 
 <BaseLayout
   title="log"
-  description="Read my thoughts on software development, design, and more."
+  description="A running log of notes, links and pills — synced from my Obsidian vault."
   canonicalPath="/log"
 >
   <section>
     <h1 class="font-bold text-2xl mb-8">my log</h1>
-    <div class="prose prose-neutral mb-8 dark:prose-invert">
+    <div class="prose prose-neutral mb-12 dark:prose-invert">
       <p>
-        This is my personal log useful also for me, synced with Obsidian, where I share all the
-        insightful pills and interesting resources I discover.
+        This is my personal log, synced from Obsidian — short notes, links and pills I want to
+        remember. Every day has its own page.
       </p>
     </div>
-    <article class="log prose prose-quoteless prose-neutral dark:prose-invert">
-      <div set:html={content} />
-    </article>
+
+    {
+      posts.length === 0 ? (
+        <p class="text-sm text-neutral-400 dark:text-neutral-400">Nothing here yet.</p>
+      ) : (
+        <div class="flex flex-col">
+          {posts.map(({ Content, href, label }) => (
+            <article class="log-entry relative mb-14 lg:mb-20">
+              <header class="mb-2 lg:mb-0 lg:absolute lg:right-full lg:mr-6 lg:w-32 lg:pt-1 lg:text-right">
+                <a
+                  href={href}
+                  class="text-sm whitespace-nowrap text-neutral-400 transition-colors hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-300"
+                >
+                  <time datetime={href.split('/').pop()}>{label}</time>
+                </a>
+              </header>
+              <div class="prose prose-quoteless prose-neutral dark:prose-invert">
+                <Content />
+              </div>
+            </article>
+          ))}
+        </div>
+      )
+    }
   </section>
 </BaseLayout>

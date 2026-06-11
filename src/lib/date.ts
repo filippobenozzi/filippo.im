@@ -1,3 +1,11 @@
+export function formatDateShort(date: string): string {
+  return new Date(date).toLocaleString('en-us', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
 export function formatDate(date: string, includeRelative = false): string {
   const currentDate = new Date();
   const targetDate = new Date(date);
