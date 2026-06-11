@@ -149,11 +149,12 @@ function buildPathIndex(ids: string[]): {
   byFull: Set<string>;
   byBasename: Map<string, string[]>;
 } {
-  const byFull = new Set(ids);
+  // _ids are already lower-cased by LiveSync; index case-insensitively to be safe.
+  const byFull = new Set(ids.map((id) => id.toLowerCase()));
   const byBasename = new Map<string, string[]>();
   for (const id of ids) {
     if (id.startsWith('h:') || id.startsWith('_')) continue;
-    const base = id.split('/').pop() ?? id;
+    const base = (id.split('/').pop() ?? id).toLowerCase();
     const list = byBasename.get(base) ?? [];
     list.push(id);
     byBasename.set(base, list);
@@ -167,10 +168,10 @@ function resolveTarget(
 ): string | null {
   const clean = target.split('#')[0].split('|')[0].trim().replace(/^\/+/, '');
   if (!clean) return null;
-  if (index.byFull.has(clean)) return clean;
-  const decoded = decodeURIComponent(clean);
-  if (index.byFull.has(decoded)) return decoded;
-  const base = clean.split('/').pop() ?? clean;
+  for (const key of [clean, decodeURIComponent(clean)].map((s) => s.toLowerCase())) {
+    if (index.byFull.has(key)) return key;
+  }
+  const base = (clean.split('/').pop() ?? clean).toLowerCase();
   const matches = index.byBasename.get(base) ?? index.byBasename.get(decodeURIComponent(base));
   return matches && matches.length > 0 ? matches[0] : null;
 }
@@ -199,9 +200,12 @@ async function main(): Promise<void> {
   const allIds = allDocs.rows.map((r) => r.id);
   const pathIndex = buildPathIndex(allIds);
 
-  // 2. Fetch the note documents under LOG_FOLDER.
-  const start = encodeURIComponent(`"${LOG_FOLDER}/"`);
-  const end = encodeURIComponent(`"${LOG_FOLDER}/￿"`);
+  // 2. Fetch the note documents under LOG_FOLDER. LiveSync lower-cases the file
+  // path in `_id` (the original case is preserved in the doc's `path` field), so
+  // the folder must be matched case-insensitively.
+  const idPrefix = LOG_FOLDER.toLowerCase();
+  const start = encodeURIComponent(`"${idPrefix}/"`);
+  const end = encodeURIComponent(`"${idPrefix}/￿"`);
   const noteRows = await couch<{ rows: AllDocsRow[] }>(
     `/_all_docs?include_docs=true&startkey=${start}&endkey=${end}`
   );
