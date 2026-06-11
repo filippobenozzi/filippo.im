@@ -25,6 +25,7 @@ const log = defineCollection({
   schema: z.object({
     date: z.string(),
     title: z.string().optional(),
+    location: z.string().optional(),
   }),
 });
 

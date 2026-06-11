@@ -133,24 +133,35 @@ function isDeleted(doc: LiveSyncDoc): boolean {
 }
 
 /**
- * Split leading YAML front matter off a note. Returns the `title` only when it
- * is actually set (an empty `title:` is treated as absent) and the body with the
- * front matter removed.
+ * Split leading YAML front matter off a note. Returns a map of the simple
+ * `key: value` properties (empty values are dropped, so an empty `title:` reads
+ * as absent) and the body with the front matter removed.
  */
-function splitFrontmatter(markdown: string): { title?: string; body: string } {
+function splitFrontmatter(markdown: string): { data: Record<string, string>; body: string } {
   const match = markdown.match(/^﻿?---\r?\n([\s\S]*?)\r?\n---[ \t]*\r?\n?/);
-  if (!match) return { body: markdown };
+  if (!match) return { data: {}, body: markdown };
 
-  let title: string | undefined;
-  for (const line of match[1].split(/\r?\n/)) {
-    const m = line.match(/^title:\s*(.*)$/i);
-    if (m) {
-      const raw = m[1].trim().replace(/^['"]|['"]$/g, '').trim();
-      if (raw) title = raw;
-      break;
+  const unquote = (s: string) => s.trim().replace(/^['"]|['"]$/g, '').trim();
+  const data: Record<string, string> = {};
+  const lines = match[1].split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(/^([A-Za-z0-9_-]+):[ \t]*(.*)$/);
+    if (!m) continue;
+    const key = m[1].toLowerCase();
+    const inline = unquote(m[2]);
+    if (inline) {
+      data[key] = inline;
+      continue;
+    }
+    // Empty inline value: gather an Obsidian "list" property (`  - item`).
+    for (let j = i + 1; j < lines.length; j++) {
+      const item = lines[j].match(/^[ \t]+-[ \t]*(.*)$/);
+      if (!item) break;
+      const value = unquote(item[1]);
+      if (value && !data[key]) data[key] = value; // first item (single-value case)
     }
   }
-  return { title, body: markdown.slice(match[0].length) };
+  return { data, body: markdown.slice(match[0].length) };
 }
 
 /** Double-quote and escape a string for use as a YAML front matter value. */
@@ -261,9 +272,23 @@ async function main(): Promise<void> {
   const noteChunkIds = dated.flatMap(({ doc }) => missingChunkIds(doc));
   const noteChunks = await bulkDocs(noteChunkIds);
   const assembled = dated.map(({ doc, date }) => {
-    const { title, body } = splitFrontmatter(assembleText(doc, noteChunks));
-    return { date, id: doc._id, title, body };
+    const { data, body } = splitFrontmatter(assembleText(doc, noteChunks));
+    return {
+      date,
+      id: doc._id,
+      title: data.title,
+      location: data.location as string | undefined,
+      body,
+    };
   });
+
+  // Carry each note's `location` forward in date order: a note without one
+  // inherits the most recently set location from an earlier day.
+  let lastLocation: string | undefined;
+  for (const note of [...assembled].sort((a, b) => (a.date < b.date ? -1 : 1))) {
+    if (note.location) lastLocation = note.location;
+    else note.location = lastLocation;
+  }
 
   // 4. Find embedded attachments across all notes and resolve them to doc ids.
   const wanted = new Map<string, string>(); // attachment docId -> media url
@@ -301,7 +326,8 @@ async function main(): Promise<void> {
   for (const note of assembled) {
     const body = rewriteMarkdown(note.body, pathIndex, wanted);
     const titleLine = note.title ? `\ntitle: ${yamlQuote(note.title)}` : '';
-    const frontmatter = `---\ndate: '${note.date}'${titleLine}\n---\n\n`;
+    const locationLine = note.location ? `\nlocation: ${yamlQuote(note.location)}` : '';
+    const frontmatter = `---\ndate: '${note.date}'${titleLine}${locationLine}\n---\n\n`;
     await fs.writeFile(path.join(CONTENT_DIR, `${note.date}.md`), frontmatter + body.trim() + '\n');
   }
 

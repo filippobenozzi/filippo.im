@@ -13,6 +13,7 @@ const posts = await Promise.all(
       date: entry.data.date,
       dateLabel: formatDateShort(entry.data.date),
       title: entry.data.title,
+      location: entry.data.location,
     };
   })
 );
@@ -37,7 +38,7 @@ const posts = await Promise.all(
         <p class="text-sm text-neutral-400 dark:text-neutral-400">Nothing here yet.</p>
       ) : (
         <div class="flex flex-col">
-          {posts.map(({ Content, date, dateLabel, title }) => (
+          {posts.map(({ Content, date, dateLabel, title, location }) => (
             <article id={date} class="log-entry relative mb-14 scroll-mt-24 lg:mb-24">
               {/* Desktop: the gutter spans the whole post and the label sticks
                   to the top while its body scrolls past. Mobile: plain in-flow. */}
@@ -47,19 +48,18 @@ const posts = await Promise.all(
                     href={`#${date}`}
                     class="block text-sm text-neutral-400 transition-colors hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-300"
                   >
-                    {title ? (
-                      <>
-                        <span class="block font-medium text-neutral-500 dark:text-neutral-300">
-                          {title}
-                        </span>
-                        <time datetime={date} class="mt-0.5 block whitespace-nowrap text-xs opacity-80">
-                          {dateLabel}
-                        </time>
-                      </>
-                    ) : (
-                      <time datetime={date} class="whitespace-nowrap">
-                        {dateLabel}
-                      </time>
+                    {title && (
+                      <span class="block font-medium text-neutral-500 dark:text-neutral-300">
+                        {title}
+                      </span>
+                    )}
+                    <time datetime={date} class="block whitespace-nowrap">
+                      {dateLabel}
+                    </time>
+                    {location && (
+                      <span class="mt-0.5 block text-neutral-400/70 dark:text-neutral-500/70">
+                        {location}
+                      </span>
                     )}
                   </a>
                 </div>
